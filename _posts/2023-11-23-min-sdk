@@ -1,0 +1,42 @@
+---
+layout: post
+title:  "Welcome to Jekyll!"
+date:   2023-04-30 00:34:49 +0200
+categories: jekyll update
+---
+
+# What can you change when increasing your minSdkVersion? *
+
+## Introduction *
+
+Increasing your minSdkVersion has many benefits blah blah *
+It's a tradeoff, you lose some % of users *
+Show the market breakdown graphic. Maybe show it by region too - highlight that it's different by region.
+
+## Cleaning up your codebase
+
+- Search your codebase for usages of `SDK_INT` (i.e., usages of `Build.VERSION.SDK_INT`), to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
+- Each section in the list below lists the cleanups which are enabled by the respective minSdkVersion
+
+## 19 (4.4 - 4.4.4 / KitKat)
+
+- Make use of the latest AndroidX library versions [from October 2023 onwards][androidx]
+
+## 21 (5.0 / )
+
+## 23 (6.0 / Marshmallow)
+
+test
+
+## 24 (7.0)
+
+<!-- TODO fact check this -->
+- Full support for [vector drawable features][vector-back-compat] `fillColor`, `fillType` and `strokeColor`. With a min sdk level of 24, you can remove `vectorDrawables.useSupportLibrary = true` from your build.gradle
+
+
+[androidx]: https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html
+
+<!-- this is pretty extensive, but I want to show how code can be cleaned up too -->
+[kaushikgopal]: https://github.com/kaushikgopal/why_bump_android_minsdk
+
+[vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
