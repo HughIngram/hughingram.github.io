@@ -18,11 +18,22 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 - Search your codebase for usages of `SDK_INT` (i.e., usages of `Build.VERSION.SDK_INT`), to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
 - Each section in the list below lists the cleanups which are enabled by the respective minSdkVersion
 
+## 14
+
+- [`VectorDrawableCompat`][vector-back-compat] is supported from sdk 14 and up - you can replace your png files with vector assets.
+
 ## 19 (4.4 - 4.4.4 / KitKat)
 
 - Make use of the latest AndroidX library versions [from October 2023 onwards][androidx]
 
-## 21 (5.0 / )
+## 21 (5.0 / Lollipop)
+
+<!-- todo fact check this-->
+<!-- in the avocado app, it seems safe to remove this already in 21 -->
+- Initial support for vector drawables, without back compatibility. With min sdk of 21, it is unlikely that you will be able to remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle`, since full support is not added until sdk level 24.
+<!-- todo double check the inpage search icon on android 5 -->
+- You can switch usages of `app:srcCompat` to `android:src`
+- You can use Jetpack Compose in your project
 
 ## 23 (6.0 / Marshmallow)
 
@@ -31,12 +42,31 @@ test
 ## 24 (7.0)
 
 <!-- TODO fact check this -->
-- Full support for [vector drawable features][vector-back-compat] `fillColor`, `fillType` and `strokeColor`. With a min sdk level of 24, you can remove `vectorDrawables.useSupportLibrary = true` from your build.gradle
+- Full support for [vector drawable features][vector-back-compat] `fillColor`, `fillType` and `strokeColor`, as well as support for resource references (e.g. referring to a theme attribute inside a vector drawable), without using `VectorDrawableCompat`. 
+With a min sdk level of 24, you can remove `vectorDrawables.useSupportLibrary = true` from your build.gradle
 
 
+<!-- 
+notes:
+
+with a minsdk of 24, it's safe to also replace srcCompat with src
+for 21 also??
+yeah... but search icon on android 5?
+
+--->
+
+<!-- bibliography -->
 [androidx]: https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html
-
 <!-- this is pretty extensive, but I want to show how code can be cleaned up too -->
 [kaushikgopal]: https://github.com/kaushikgopal/why_bump_android_minsdk
 
 [vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
+
+<!-- link dump - idk if I will use all these -->
+<!--
+VectorDrawableCompat introduced:
+https://android-developers.googleblog.com/2016/02/android-support-library-232.html
+
+my stackoverflow answer about VectorDrawableCompat
+https://stackoverflow.com/a/77539618/8033904
+-->
