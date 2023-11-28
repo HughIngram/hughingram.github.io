@@ -1,11 +1,9 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2023-04-30 00:34:49 +0200
-categories: jekyll update
+title:  "Code Cleanups for minSdkVersion Increases"
+date:   2023-11-23 00:34:49 +0200
+categories: tech blog
 ---
-
-# What can you change when increasing your minSdkVersion? *
 
 ## Introduction *
 
@@ -15,8 +13,8 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## Cleaning up your codebase
 
-- Search your codebase for usages of `SDK_INT` (i.e., usages of `Build.VERSION.SDK_INT`), to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
-- Each section in the list below lists the cleanups which are enabled by the respective minSdkVersion
+- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, and `@RequiresApi`, to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
+- Each section in the list below lists the cleanups which are enabled by the respective minSdkVersion.
 
 ## 14 (Ice Cream Sandwich)
 
@@ -24,7 +22,7 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## 19 (4.4 - 4.4.4 / KitKat)
 
-- Make use of the latest AndroidX library versions [from October 2023 onwards][androidx]
+- Make use of the latest AndroidX library versions after their minSdk was increased [from October 2023 onwards][androidx].
 
 ## 21 (5.0 / Lollipop)
 
@@ -38,9 +36,9 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 ## 24 (7.0 / Nougat)
 
 - Full support for vector drawable features, without using backwards compatibility:
-    - You can remove `vectorDrawables.useSupportLibrary = true` from your build.gradle
+    - You can remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle` file.
     - You can switch usages of `app:srcCompat` to `android:src`
-- Support for resource references inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary")
+- Support for resource references inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"``).
 
 ## 25 (7.1 / Nougat)
 
