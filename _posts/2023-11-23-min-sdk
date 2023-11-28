@@ -28,11 +28,12 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## 21 (5.0 / Lollipop)
 
+- TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older android versions, it can be removed.
 - You can use Jetpack Compose in your project
 
 ## 23 (6.0 / Marshmallow)
 
-test
+- test
 
 ## 24 (7.0 / Nougat)
 
@@ -52,11 +53,4 @@ test
 
 [vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
 
-<!-- link dump - idk if I will use all these -->
-<!--
-VectorDrawableCompat introduced:
-https://android-developers.googleblog.com/2016/02/android-support-library-232.html
-
-my stackoverflow answer about VectorDrawableCompat
-https://stackoverflow.com/a/77539618/8033904
--->
+[tls-workaround]: [https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1]
