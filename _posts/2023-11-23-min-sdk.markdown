@@ -13,8 +13,8 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## Cleaning up your codebase
 
-- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, and `@RequiresApi`, to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
-- Each section in the list below lists the cleanups which are enabled by the respective minSdkVersion.
+- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi`, to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
+- Each section in the list below lists the cleanups which are enabled by an increast the respective minSdkVersion or higher.
 
 ## 14 (Ice Cream Sandwich)
 
@@ -24,6 +24,10 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 - Make use of the latest AndroidX library versions after their minSdk was increased [from October 2023 onwards][androidx].
 
+## 20
+
+- It may be possible to remove `multidexEnabled = true` from the `android` block of `build.gradle`, in case this property was added for the sake of supporting [desugaring][desugaring].
+
 ## 21 (5.0 / Lollipop)
 
 - TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older android versions, it can be removed.
@@ -31,7 +35,7 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## 23 (6.0 / Marshmallow)
 
-- test
+- TODO `android:foreground`
 
 ## 24 (7.0 / Nougat)
 
@@ -44,11 +48,25 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 - todo
 
+## 26 
+
+- `android:focusedByDefault`
+- Support for java APIs `java.time` is enabled - this means that you may no longer need to use a backwards compatibility solution for this API, e.g. [desugaring][desugaring] or [ThreeTen][threeten]
+
+
 <!-- bibliography -->
+
 [androidx]: https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html
+
 <!-- this is pretty extensive, but I want to show how code can be cleaned up too -->
 [kaushikgopal]: https://github.com/kaushikgopal/why_bump_android_minsdk
 
 [vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
 
 [tls-workaround]: [https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1]
+
+[desugaring]: https://developer.android.com/studio/write/java8-support#library-desugaring
+
+[api-26-java]: https://developer.android.com/about/versions/oreo/android-8.0#java
+
+[threeten]: https://github.com/ThreeTen/threetenbp
