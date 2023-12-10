@@ -13,8 +13,11 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## Cleaning up your codebase
 
-- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi`, to check for spots where your code branches dependeding on sdk version. You may find many back-compatibility fixes which can be removed.
-- Each section in the list below lists the cleanups which are enabled by an increast the respective minSdkVersion or higher.
+The first step is to identify and remove all obsolete code and resources. This can be done automatically by running gradle lint, either locally or as part of a CI build. The check `ObsoleteSdkInt` should find any cases of code and resources rendered obsolete by the increased minSdk version. Alternatively you could check manually:
+- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi`, to check for spots where your code branches dependeding on sdk version.
+- Check for qualified resources, e.g. if raising your minSdkVersion from 21 to 24, a file `v23/styles.xml` can be removed. Remember that the highest api level up to a device's level will be matched as the correct resource to use. So the `v23/styles.xml` file in this example should be merged into the main `styles.xml` file rather than simply deleted.
+
+This blog post will focus mostly on new SDK features which become usable with a minSdk increase, as well as common 'hacks' which may not be guarded by a check which is easily searched for. Each section in the list below lists the cleanups which are enabled by an increase to the respective minSdkVersion or higher.
 
 ## 14 (Ice Cream Sandwich)
 
@@ -24,17 +27,15 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 - Make use of the latest AndroidX library versions after their minSdk was increased [from October 2023 onwards][androidx].
 
-## 20
-
-- It may be possible to remove `multidexEnabled = true` from the `android` block of `build.gradle`, in case this property was added for the sake of supporting [desugaring][desugaring].
-
 ## 21 (5.0 / Lollipop)
 
 - TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older android versions, it can be removed.
-- You can use Jetpack Compose in your project
+- The [multidex library][multidex] can be removed.
+- You can use Jetpack Compose in your project.
 
 ## 23 (6.0 / Marshmallow)
 
+- [App links][app links] are enabled from Android 6.0 and up - so with minSdk of 23 or hgher, you can assume that all target devices will handle verified links without showing the disambiguation interface.
 - TODO `android:foreground`
 
 ## 24 (7.0 / Nougat)
@@ -42,7 +43,7 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 - Full support for vector drawable features, without using backwards compatibility:
     - You can remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle` file.
     - You can switch usages of `app:srcCompat` to `android:src`
-- Support for resource references inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"``).
+    - Resource references can be used inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"`).
 
 ## 25 (7.1 / Nougat)
 
@@ -50,8 +51,9 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 
 ## 26 
 
-- `android:focusedByDefault`
+- TODO `android:focusedByDefault`
 - Support for java APIs `java.time` is enabled - this means that you may no longer need to use a backwards compatibility solution for this API, e.g. [desugaring][desugaring] or [ThreeTen][threeten]
+- TODo can the desugar library be removed? Check if all the backported APIs are in api 26
 
 
 <!-- bibliography -->
@@ -70,3 +72,7 @@ Show the market breakdown graphic. Maybe show it by region too - highlight that 
 [api-26-java]: https://developer.android.com/about/versions/oreo/android-8.0#java
 
 [threeten]: https://github.com/ThreeTen/threetenbp
+
+[multidex]: https://developer.android.com/build/multidex
+
+[app links]: https://developer.android.com/training/app-links/verify-android-applinks
