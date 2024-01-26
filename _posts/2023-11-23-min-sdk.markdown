@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "minSdk upgrade guide"
+title:  "minSdk Upgrade Guide"
 date:   2024-01-26 00:34:49 +0200
 categories: tech blog
 ---
 
 ## Introduction
 
-Increasing your minSdkVersion of your Android app brings many technical benefits, by enabling a simpler development process, along with security benefits.
+Increasing your minSdkVersion in your Android app brings many technical benefits, by enabling a simpler development process along with security advantages.
 With each increase to the minSdkVersion, fewer users will be able to use your app, so it is important to weigh the technical benefits against the drawback of losing users.
 It's also worth checking this segmentation for your app specifically, as the distribution of Android versions can vary by region.
 
@@ -15,17 +15,16 @@ It's also worth checking this segmentation for your app specifically, as the dis
 
 ## Cleaning up your codebase
 
-The first step is to identify and remove all obsolete code and resources. This can be done automatically by running gradle lint, either locally or as part of a CI build. The lint check `ObsoleteSdkInt` should find any cases of code and resources rendered obsolete by the increased minSdk version. Alternatively you could check manually:
-- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi`, to check for spots where your code branches dependeding on sdk version.
-- Check for qualified resources, e.g. if raising your minSdkVersion from 22 to 23, the file `v23/styles.xml` could be removed. 
-Remember that the OS will choose which resource to use by selecting the highest numbered directory which is compatible with the device's sdk level. So the `v23/styles.xml` file in this example should be merged into the main `styles.xml` file rather than simply deleted.
+The first step is to identify and remove all obsolete code and resources. This can be done automatically by running Gradle lint, either locally or as part of a CI build. The lint check `ObsoleteSdkInt` should find any cases of code and resources rendered obsolete by the increased minSdk version. Alternatively, you could check manually:
+- Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi` to check for spots where your code branches depending on the SDK version.
+- Check for qualified resources; for example, if raising your minSdkVersion from 22 to 23, the file `v23/styles.xml` could be removed. 
+Remember that the OS will choose which resource to use by selecting the highest numbered directory compatible with the device's SDK level. So, the `v23/styles.xml` file, in this example, should be merged into the main `styles.xml` file rather than simply deleted.
 
-
-This blog post will focus mostly on new SDK features which become usable with a minSdk increase, as well as common hacks which become obsolete with an increased minSdk, but may not be guarded by an sdk level check which is easily searched for. Each section in the list below lists the cleanups which are enabled by an increase to the respective minSdkVersion or higher.
+This blog post will focus mostly on new SDK features that become usable with a minSdk increase, as well as common hacks that become obsolete with an increased minSdk, but may not be guarded by an SDK level check that is easily searched for. Each section in the list below lists the cleanups enabled by an increase to the respective minSdkVersion or higher.
 
 ## 14 (Ice Cream Sandwich)
 
-- [`VectorDrawableCompat`][vector-back-compat] is supported from sdk 14 and up - you can replace your png files with vector assets.
+- [`VectorDrawableCompat`][vector-back-compat] is supported from SDK 14 and up - you can replace your PNG files with vector assets.
 
 ## 19 (4.4 - 4.4.4 / KitKat)
 
@@ -33,37 +32,36 @@ This blog post will focus mostly on new SDK features which become usable with a 
 
 ## 21 (5.0 / Lollipop)
 
-- TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older android versions, it can be removed.
+- TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older Android versions, it can be removed.
 - The [multidex library][multidex] can be removed.
 - You can use Jetpack Compose in your project.
 
 ## 23 (6.0 / Marshmallow)
 
-- [App links][app links] are enabled from Android 6.0 and up - so with minSdk of 23 or hgher, you can assume that all target devices will handle verified links without showing the disambiguation interface.
+- [App links][app links] are enabled from Android 6.0 and up - so with minSdk of 23 or higher, you can assume that all target devices will handle verified links without showing the disambiguation interface.
 
 <!-- - TODO `android:foreground` -->
 
 ## 24 (7.0 / Nougat)
 
-- Full support for vector drawable features, without using backwards compatibility:
+- Full support for vector drawable features, without using backward compatibility:
     - You can remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle` file.
     - You can switch usages of `app:srcCompat` to `android:src`
     - Resource references can be used inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"`).
 - Support for the [Vulkan][vulkan] 3D APIs.
-- The ICU4J libraries (which provide Unicode and internationalization support) are available from the `android.icu` package. In case you are using them from `com.java.icu`, you can migrate your app in order to reduce .apk size.
-- If your app is using a custom `X509TrustManager` (e.g. to trust an unsigned certificate for test servers in debug builds), you should migrate it to use a declarative [Network Security Config][security-config], to reduce the possibility of programmatic errors.
+- The ICU4J libraries (which provide Unicode and internationalization support) are available from the `android.icu` package. In case you are using them from `com.java.icu`, you can migrate your app to reduce the .apk size.
+- If your app is using a custom `X509TrustManager` (e.g., to trust an unsigned certificate for test servers in debug builds), you should migrate it to use a declarative [Network Security Config][security-config], reducing the possibility of programmatic errors.
 
-<!-- key attestation: probably outside the scope of 'cleanup', but definetely and advantage to minSdk 24 -->
+<!-- key attestation: probably outside the scope of 'cleanup', but definitely an advantage to minSdk 24 -->
 
 ## 25 (7.1 / Nougat)
 
-- SDK 25 added support for  [shortcuts][shortcuts]. In case your app uses them, make sure to merge the code into the main source set, e.g. from `xml-25/shortcuts.xml`.
+- SDK 25 added support for  [shortcuts][shortcuts]. In case your app uses them, make sure to merge the code into the main source set, e.g., from `xml-25/shortcuts.xml`.
 
 ## 26 (8.0 / Oreo)
 
 <!-- - TODO `android:focusedByDefault` -->
-- Support for java APIs `java.time` is enabled - this means that you may no longer need to use a backwards compatibility solution for this API, e.g. [desugaring][desugaring] or [ThreeTen][threeten]
-
+- Support for Java APIs `java.time` is enabled - this means that you may no longer need to use a backward compatibility solution for this API, e.g., [desugaring][desugaring] or [ThreeTen][threeten]
 
 <!-- bibliography -->
 
