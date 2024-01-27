@@ -7,7 +7,7 @@ categories: tech blog
 
 ## Introduction
 
-Increasing your minSdkVersion in your Android app brings many technical benefits, by enabling a simpler development process along with security advantages.
+Increasing the minSdkVersion of your Android app brings many technical benefits, by enabling a simpler development process along with security advantages.
 With each increase to the minSdkVersion, fewer users will be able to use your app, so it is important to weigh the technical benefits against the drawback of losing users.
 It's also worth checking this segmentation for your app specifically, as the distribution of Android versions can vary by region.
 
@@ -15,12 +15,12 @@ It's also worth checking this segmentation for your app specifically, as the dis
 
 ## Cleaning up your codebase
 
-The first step is to identify and remove all obsolete code and resources. This can be done automatically by running Gradle lint, either locally or as part of a CI build. The lint check `ObsoleteSdkInt` should find any cases of code and resources rendered obsolete by the increased minSdk version. Alternatively, you could check manually:
+After increasing the `minSdkVersion` in your `build.gradle`, the first step is in cleaning your codebase is to identify and remove all obsolete code and resources. This can be done automatically by running Gradle lint, either locally or as part of a CI build. The lint check `ObsoleteSdkInt` should find any cases of code and resources rendered obsolete by the increased minSdk version. Alternatively, you could check manually:
 - Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi` to check for spots where your code branches depending on the SDK version.
 - Check for qualified resources; for example, if raising your minSdkVersion from 22 to 23, the file `v23/styles.xml` could be removed. 
-Remember that the OS will choose which resource to use by selecting the highest numbered directory compatible with the device's SDK level. So, the `v23/styles.xml` file, in this example, should be merged into the main `styles.xml` file rather than simply deleted.
+Remember that the OS will choose which resource to use by selecting the highest numbered directory compatible with the device's SDK level. So the `v23/styles.xml` file, in this example, should be merged into the main `styles.xml` file rather than simply deleted.
 
-This blog post will focus mostly on new SDK features that become usable with a minSdk increase, as well as common hacks that become obsolete with an increased minSdk, but may not be guarded by an SDK level check that is easily searched for. Each section in the list below lists the cleanups enabled by an increase to the respective minSdkVersion or higher.
+This rest of this blog post will focus mostly on new SDK features that become usable with a minSdk increase, as well as common hacks that become obsolete with an increased minSdk, but may not be guarded by an SDK level check that is easily searched for. Each section in the list below lists the cleanups enabled by an increase to the respective minSdkVersion or higher.
 
 ## 14 (Ice Cream Sandwich)
 
@@ -46,10 +46,10 @@ This blog post will focus mostly on new SDK features that become usable with a m
 
 - Full support for vector drawable features, without using backward compatibility:
     - You can remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle` file.
-    - You can switch usages of `app:srcCompat` to `android:src`
+    - You can switch usages of `app:srcCompat` to `android:src`.
     - Resource references can be used inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"`).
 - Support for the [Vulkan][vulkan] 3D APIs.
-- The ICU4J libraries (which provide Unicode and internationalization support) are available from the `android.icu` package. In case you are using them from `com.java.icu`, you can migrate your app to reduce the .apk size.
+- The ICU4J libraries (which provide Unicode and internationalization support) are available from the `android.icu` package. In case your app imports from `com.java.icu`, you can migrate to `android.icu` to reduce the .apk size.
 - If your app is using a custom `X509TrustManager` (e.g., to trust an unsigned certificate for test servers in debug builds), you should migrate it to use a declarative [Network Security Config][security-config], reducing the possibility of programmatic errors.
 
 <!-- key attestation: probably outside the scope of 'cleanup', but definitely an advantage to minSdk 24 -->
