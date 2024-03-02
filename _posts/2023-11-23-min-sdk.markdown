@@ -19,6 +19,7 @@ After increasing the `minSdkVersion` in your `build.gradle`, the first step is i
 - Search your codebase for usages of `BUILD.VERSION_CODES`, `Build.VERSION.SDK_INT`, `@RequiresApi`, `@TargetApi`, and `tools:targetApi` to check for spots where your code branches depending on the SDK version.
 - Check for qualified resources; for example, if raising your minSdkVersion from 22 to 23, the file `v23/styles.xml` could be removed. 
 Remember that the OS will choose which resource to use by selecting the highest numbered directory compatible with the device's SDK level. So the `v23/styles.xml` file, in this example, should be merged into the main `styles.xml` file rather than simply deleted.
+- Search for instances of `tools:ignore="UnusedAttribute"` in XML files; they might be possible to remove, e.g. for the intent filter attribute `android:autoVerify` with an minSdk of 23 or higher.
 
 This rest of this blog post will focus mostly on new SDK features that become usable with a minSdk increase, as well as common hacks that become obsolete with an increased minSdk, but may not be guarded by an SDK level check that is easily searched for. Each section in the list below lists the cleanups enabled by an increase to the respective minSdkVersion or higher.
 
