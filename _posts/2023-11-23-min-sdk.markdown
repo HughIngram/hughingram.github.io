@@ -25,21 +25,21 @@ This rest of this blog post will focus mostly on new SDK features that become us
 
 ## 14 (Ice Cream Sandwich)
 
-- [`VectorDrawableCompat`][vector-back-compat] is supported from SDK 14 and up - you can replace your PNG files with vector assets.
+- [`VectorDrawableCompat`][vector-back-compat]{:target="_blank"} is supported from SDK 14 and up - you can replace your PNG files with vector assets.
 
 ## 19 (4.4 - 4.4.4 / KitKat)
 
-- Make use of the latest AndroidX library versions after their minSdk was increased [from October 2023 onwards][androidx].
+- Make use of the latest AndroidX library versions after their minSdk was increased [from October 2023 onwards][androidx]{:target="_blank"}.
 
 ## 21 (5.0 / Lollipop)
 
-- TLS 1.2 is supported. In case you added a [workaround][tls-1.2-workaround] to support TLS 1.2 on older Android versions, it can be removed.
-- The [multidex library][multidex] can be removed.
+- TLS 1.2 is supported. In case you added a [workaround][tls-1.2-workaround]{:target="_blank"} to support TLS 1.2 on older Android versions, it can be removed.
+- The [multidex library][multidex]{:target="_blank"} can be removed.
 - You can use Jetpack Compose in your project.
 
 ## 23 (6.0 / Marshmallow)
 
-- [App links][app links] are enabled from Android 6.0 and up - so with minSdk of 23 or higher, you can assume that all target devices will handle verified links without showing the disambiguation interface.
+- [App links][app links]{:target="_blank"} are enabled from Android 6.0 and up - so with minSdk of 23 or higher, you can assume that all target devices will handle verified links without showing the disambiguation interface.
 
 <!-- - TODO `android:foreground` -->
 
@@ -49,20 +49,20 @@ This rest of this blog post will focus mostly on new SDK features that become us
     - You can remove `vectorDrawables.useSupportLibrary = true` from your `build.gradle` file.
     - You can switch usages of `app:srcCompat` to `android:src`.
     - Resource references can be used inside vector drawables (e.g. setting `fillColor="?attr/colorOnPrimary"`).
-- Support for the [Vulkan][vulkan] 3D APIs.
+- Support for the [Vulkan][vulkan]{:target="_blank"} 3D APIs.
 - The ICU4J libraries (which provide Unicode and internationalization support) are available from the `android.icu` package. In case your app imports from `com.java.icu`, you can migrate to `android.icu` to reduce the .apk size.
-- If your app is using a custom `X509TrustManager` (e.g., to trust an unsigned certificate for test servers in debug builds), you should migrate it to use a declarative [Network Security Config][security-config], reducing the possibility of programmatic errors.
+- If your app is using a custom `X509TrustManager` (e.g., to trust an unsigned certificate for test servers in debug builds), you should migrate it to use a declarative [Network Security Config][security-config]{:target="_blank"}, reducing the possibility of programmatic errors.
 
 <!-- key attestation: probably outside the scope of 'cleanup', but definitely an advantage to minSdk 24 -->
 
 ## 25 (7.1 / Nougat)
 
-- SDK 25 added support for  [shortcuts][shortcuts]. In case your app uses them, make sure to merge the code into the main source set, e.g., from `xml-25/shortcuts.xml`.
+- SDK 25 added support for  [shortcuts][shortcuts]{:target="_blank"}. In case your app uses them, make sure to merge the code into the main source set, e.g., from `xml-25/shortcuts.xml`.
 
 ## 26 (8.0 / Oreo)
 
 <!-- - TODO `android:focusedByDefault` -->
-- Support for Java APIs `java.time` is enabled - this means that you may no longer need to use a backward compatibility solution for this API, e.g., [desugaring][desugaring] or [ThreeTen][threeten]
+- Support for Java APIs `java.time` is enabled - this means that you may no longer need to use a backward compatibility solution for this API, e.g., [desugaring][desugaring]{:target="_blank"} or [ThreeTen][threeten]{:target="_blank"}
 
 
 ## 29 (10)
