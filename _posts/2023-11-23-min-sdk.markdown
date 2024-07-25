@@ -33,7 +33,7 @@ This rest of this blog post will focus mostly on new SDK features that become us
 
 ## 21 (5.0 / Lollipop)
 
-- TLS 1.2 is supported. In case you added a [workaround][tls-workaround] to support TLS on older Android versions, it can be removed.
+- TLS 1.2 is supported. In case you added a [workaround][tls-1.2-workaround] to support TLS 1.2 on older Android versions, it can be removed.
 - The [multidex library][multidex] can be removed.
 - You can use Jetpack Compose in your project.
 
@@ -64,6 +64,10 @@ This rest of this blog post will focus mostly on new SDK features that become us
 <!-- - TODO `android:focusedByDefault` -->
 - Support for Java APIs `java.time` is enabled - this means that you may no longer need to use a backward compatibility solution for this API, e.g., [desugaring][desugaring] or [ThreeTen][threeten]
 
+
+## 29 (10)
+- TLS 1.3 is supported. In case you added a [workaround][tls-1.3-workaround]{:target="_blank"} to support TLS 1.3 on older android versions, it can be removed.
+
 <!-- bibliography -->
 
 [androidx]: https://android-developers.googleblog.com/2023/10/androidx-minsdkversion-19.html
@@ -73,7 +77,7 @@ This rest of this blog post will focus mostly on new SDK features that become us
 
 [vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
 
-[tls-workaround]: [https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1]
+[tls-1.2-workaround]: [https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1]
 
 <!-- 24 -->
 [shortcuts]: https://developer.android.com/develop/ui/views/launch/shortcuts
@@ -94,3 +98,6 @@ This rest of this blog post will focus mostly on new SDK features that become us
 [multidex]: https://developer.android.com/build/multidex
 
 [app links]: https://developer.android.com/training/app-links/verify-android-applinks
+
+<!-- 29 -->
+[tls-1.3-workaround]: https://stackoverflow.com/questions/55539513/how-to-enable-tlsv1-3-for-okhttp-3-12-x-on-android-8-9/59346159#59346159
