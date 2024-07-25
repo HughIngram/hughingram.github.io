@@ -77,7 +77,7 @@ This rest of this blog post will focus mostly on new SDK features that become us
 
 [vector-back-compat]: https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources#vector-drawables-backward-solution
 
-[tls-1.2-workaround]: [https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1]
+[tls-1.2-workaround]: https://stackoverflow.com/questions/28943660/how-to-enable-tls-1-2-support-in-an-android-application-running-on-android-4-1
 
 <!-- 24 -->
 [shortcuts]: https://developer.android.com/develop/ui/views/launch/shortcuts
